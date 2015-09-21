@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace TimeWarpMod
 {
-    class SunController : MonoBehaviour, ISimulationManager
+    class SunManager : MonoBehaviour, ISimulationManager
     {
 
         public uint speed;
@@ -72,10 +72,12 @@ namespace TimeWarpMod
 
                 int offset = (int)((value - sim.m_currentDayTimeHour) / SimulationManager.DAYTIME_FRAME_TO_HOUR);
                 dayOffsetFrames = (uint)(((long)dayOffsetFrames + offset) % SimulationManager.DAYTIME_FRAMES);
+
+                sim.m_currentDayTimeHour = value;
             }
             get
             {
-                return Singleton<SimulationManager>.instance.m_currentDayTimeHour;
+                return sim.m_currentDayTimeHour;
             }
         }
 

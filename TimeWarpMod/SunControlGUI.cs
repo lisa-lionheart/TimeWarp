@@ -10,10 +10,9 @@ using ColossalFramework.UI;
 
 namespace TimeWarpMod
 {
-    class SunGUI : UIPanel
+    class SunControlGUI : UIPanel
     {
 
-        UILabel timeOfDay;
         
         UILabel lattitude;
         UISlider lattitudeControl;
@@ -26,16 +25,21 @@ namespace TimeWarpMod
         UILabel speed;
         UISlider speedControl;
 
-        public SunController sunControl;
+        public SunManager sunControl;
 
         private uint[] speeds = { 0, 1, 2, 4, 8, 16, 32, 64, 128 };
 
         public override void Awake()
         {
             size = new Vector2(200, 100);
-            //gameObject.transform.localPosition = new Vector3(-1.7f,-0.6f,0.0f);
+            
             anchor = UIAnchorStyle.Bottom & UIAnchorStyle.Left;
-            backgroundSprite = "InfoPanelBack";
+            backgroundSprite = "ButtonMenu";
+
+            autoLayoutPadding = new RectOffset(10, 10, 4, 4);
+            autoLayout = true;
+            autoFitChildrenVertically = true;
+            autoLayoutDirection = LayoutDirection.Vertical;
 
             UILabel title = AddUIComponent<UILabel>();
             title.text = "Day/Night Settings";
@@ -45,31 +49,28 @@ namespace TimeWarpMod
             title.autoSize = false;
             title.size = new Vector2(width - 20, 40);
                         
-            autoLayoutPadding = new RectOffset(10, 10, 4, 4);
-            autoLayout = true;
-            autoFitChildrenVertically = true;
-            autoLayoutDirection = LayoutDirection.Vertical;
 
-
-            timeOfDay = AddUIComponent<UILabel>();
-
+            
             //0, 1, 2, 4, 8, 16, 32, 64, 128 
             speed = AddUIComponent<UILabel>();
-            speedControl = createSlider(0f, 8f);
+            speedControl = UIFactory.CreateSlider(this,0f, 8f);
+            speedControl.eventValueChanged += ValueChanged;
            
             lattitude = AddUIComponent<UILabel>();
-            lattitudeControl = createSlider(-80f,80f);
+            lattitudeControl = UIFactory.CreateSlider(this, -80f, 80f);
+            lattitudeControl.eventValueChanged += ValueChanged;
 
             longitude = AddUIComponent<UILabel>();
-            longitudeControl = createSlider(-180f,180f);
+            longitudeControl = UIFactory.CreateSlider(this, -180f, 180f);
+            longitudeControl.eventValueChanged += ValueChanged;
 
             AddUIComponent<UILabel>().text = "Sun Size";
-            sunSize = createSlider(0.01f, 10.0f);
+            sunSize = UIFactory.CreateSlider(this, 0.01f, 10.0f);         
+            sunSize.eventValueChanged += ValueChanged;
 
             AddUIComponent<UILabel>().text = "Sun Intensity";
-            sunIntensity = createSlider(0, 8f);
+            sunIntensity = UIFactory.CreateSlider(this, 0, 8f);
             sunIntensity.stepSize = 0.1f;
-
 
             UILabel endPadding = AddUIComponent<UILabel>();
             endPadding.text = "    ";
@@ -109,29 +110,7 @@ namespace TimeWarpMod
         }
 
 
-        UISlider createSlider(float min, float max)
-        {
-            UISlider slider = AddUIComponent<UISlider>();
-            slider.width = width - (autoLayoutPadding.left+autoLayoutPadding.right);
-            slider.height = 17;
-            slider.autoSize = false;
-            slider.backgroundSprite = "OptionsScrollbarTrack";
 
-            slider.maxValue = max;
-            slider.minValue = min;
-
-            UISprite thumb = slider.AddUIComponent<UISprite>();
-            thumb.size = new Vector2(16, 16);
-            thumb.position = new Vector2(0, 0);
-            thumb.spriteName = "OptionsScrollbarThumb";
-
-            slider.value = 0.0f;
-            slider.thumbObject = thumb;
-
-
-            slider.eventValueChanged += ValueChanged;
-            return slider;
-        }
 
         void Update()
         {
@@ -147,12 +126,6 @@ namespace TimeWarpMod
                 sunSize.value = DayNightProperties.instance.m_SunSize;
                 sunIntensity.value = DayNightProperties.instance.m_SunIntensity;
 
-                float tod = sunControl.TimeOfDay;
-
-                int hour = (int)Math.Floor(tod);
-                int minute = (int)Math.Floor((tod - hour) * 60.0f);
-
-                timeOfDay.text = String.Format("Current Time: {0,2:00}:{1,2:00}", hour, minute);
 
                 switch (sunControl.speed)
                 {

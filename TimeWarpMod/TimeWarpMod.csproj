@@ -57,8 +57,9 @@
   <ItemGroup>
     <Compile Include="ModMain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SunGUI.cs" />
+    <Compile Include="SunControlGUI.cs" />
     <Compile Include="SunController.cs" />
+    <Compile Include="TimeSlider.cs" />
     <Compile Include="UIUtils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -4,6 +4,7 @@ using ColossalFramework.UI;
 using ICities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,8 +14,9 @@ namespace TimeWarpMod
 {
     public class ModMain : LoadingExtensionBase, IUserMod
     {
-        GameObject sunControlPanel;
-        SunController sunControl;
+        SunControlGUI sunControlPanel;
+        TimeSlider timeSlider;
+        SunManager sunControl;
             
         public string Name
         {
@@ -33,13 +35,21 @@ namespace TimeWarpMod
             
             Debug.Log("Creating panel");
 
-            sunControlPanel = new GameObject("SunControlPanel");
-            sunControlPanel.transform.localPosition = new Vector3(-1.7f, -0.22f, 0);
-            sunControlPanel.AddComponent<SunGUI>().sunControl = sunControl;
-            UIView.GetAView().AttachUIComponent(sunControlPanel);
+            sunControlPanel = new GameObject("SunControlPanel").AddComponent<SunControlGUI>();
+            sunControlPanel.gameObject.transform.localPosition = new Vector3(-1.75f, -0.1f, 0);
+            sunControlPanel.sunControl = sunControl;
+
+            timeSlider = new GameObject("TimeSlider").AddComponent<TimeSlider>();
+            timeSlider.gameObject.transform.localPosition = new Vector3(-1.33f, -0.6f, 0);
+            timeSlider.sunControl = sunControl;
 
 
-            sunControlPanel.SetActive(false);
+            UIView.GetAView().AttachUIComponent(timeSlider.gameObject);
+            UIView.GetAView().AttachUIComponent(sunControlPanel.gameObject);
+
+
+            sunControlPanel.gameObject.SetActive(false);
+            timeSlider.gameObject.SetActive(false);
         }
 
         public void AddGUIToggle()
@@ -51,7 +61,7 @@ namespace TimeWarpMod
 
             UIButton toggle = UIFactory.CreateButton(bottomBar);
 
-            toggle.area = new Vector4(104, 27, 32, 32);
+            toggle.area = new Vector4(108, 24, 38, 38);
             toggle.playAudioEvents = true;
 
             toggle.normalBgSprite = "OptionBase";
@@ -59,18 +69,20 @@ namespace TimeWarpMod
             toggle.hoveredBgSprite = "OptionBaseHover";
             toggle.pressedBgSprite = "OptionBasePressed";
 
-            toggle.tooltip = "Sun Settings";
+            toggle.tooltip = "Day/Night Settings";
 
-            toggle.normalFgSprite = "IconSun";
-            toggle.scaleFactor = 0.5f;
+            toggle.normalFgSprite = "InfoIconEntertainmentDisabled";
+            toggle.scaleFactor = 0.75f;
 
             toggle.eventClicked += (UIComponent component, UIMouseEventParameter eventParam) =>
             {
-                bool active = !sunControlPanel.active;
+                bool active = !sunControlPanel.gameObject.active;
+
 
                 toggle.normalBgSprite = active ? "OptionBasePressed" : "OptionBase";
 
-                sunControlPanel.SetActive(active);
+                sunControlPanel.gameObject.SetActive(active);
+                timeSlider.gameObject.SetActive(active);
                 
             };
         }
@@ -90,13 +102,14 @@ namespace TimeWarpMod
 
         public override void OnLevelLoaded(LoadMode mode)
         {
+            if (GameObject.Find("ZoomButton") != null)
+            {
+                sunControl = new GameObject().AddComponent<SunManager>();
 
-            sunControl = new GameObject().AddComponent<SunController>();
-            
-            CreateControlPanel();
-            AddGUIToggle();
-            HookZoomControls();
-            
+                CreateControlPanel();
+                AddGUIToggle();
+                HookZoomControls();
+            }
 
         }
 

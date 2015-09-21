@@ -25,6 +25,38 @@ namespace BuildingThemes.GUI
             return button;
         }
 
+        public static UISlider CreateSlider(UIPanel parent, float min, float max)
+        {
+            UIPanel bg = parent.AddUIComponent<UIPanel>();
+            bg.backgroundSprite = "ChirpScrollbarTrack";
+            bg.size = new Vector2(parent.width - (parent.autoLayoutPadding.left * 2), 17);
+
+            UISlider slider = bg.AddUIComponent<UISlider>();
+            slider.area = new Vector4(8, 0, bg.width - 16, 15);
+            slider.height = 17;
+            slider.autoSize = false;
+            //slider.backgroundSprite = "ChirpScrollbarTrack";
+
+            slider.maxValue = max;
+            slider.minValue = min;
+
+           
+
+            slider.fillPadding = new RectOffset(10, 10, 0, 0);
+
+            UISprite thumb = slider.AddUIComponent<UISprite>();
+            thumb.size = new Vector2(16, 16);
+            thumb.position = new Vector2(0, 0);
+            thumb.spriteName = "ToolbarIconZoomOutGlobeDisabled";
+
+            slider.value = 0.0f;
+            slider.thumbObject = thumb;
+
+
+            return slider;
+        }
+
+
         public static UICheckBox CreateCheckBox(UIComponent parent)
         {
             UICheckBox checkBox = parent.AddUIComponent<UICheckBox>();
