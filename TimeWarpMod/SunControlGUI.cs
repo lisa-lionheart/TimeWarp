@@ -27,7 +27,10 @@ namespace TimeWarpMod
 
         public SunManager sunControl;
 
-        private uint[] speeds = { 0, 1, 2, 4, 8, 16, 32, 64, 128 };
+        private const int paused = 0;
+        private const int normal = 1;
+
+        private double[] speeds = { paused, 0.25, .5, normal, 2, 4, 8, 16, 32, 64, 128 };
 
         public override void Awake()
         {
@@ -127,17 +130,12 @@ namespace TimeWarpMod
                 sunIntensity.value = DayNightProperties.instance.m_SunIntensity;
 
 
-                switch (sunControl.speed)
-                {
-                    case 0:
-                        speed.text = "Speed: Paused";
-                        break;
-                    case 1:
-                        speed.text = "Speed: Normal";
-                        break;
-                    default:
-                        speed.text = "Speed: " + sunControl.speed + "x";
-                        break;
+                if (sunControl.speed == paused) {
+                    speed.text = "Speed: Paused";
+                } else if (sunControl.speed == normal) {
+                    speed.text = "Speed: Normal";
+                } else {
+                    speed.text = "Speed: " + sunControl.speed + "x";
                 }
 
                 speedControl.value = Array.IndexOf(speeds, sunControl.speed);
