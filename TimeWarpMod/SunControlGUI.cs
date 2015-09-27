@@ -20,7 +20,8 @@ namespace TimeWarpMod
         UILabel longitude;
         UISlider longitudeControl;
 
-        UISlider sunSize, sunIntensity;
+        UISlider sunSize;
+        UISlider sunIntensity;
 
         UILabel speed;
         UISlider speedControl;
@@ -40,6 +41,7 @@ namespace TimeWarpMod
             autoLayout = true;
             autoFitChildrenVertically = true;
             autoLayoutDirection = LayoutDirection.Vertical;
+
 
             UILabel title = AddUIComponent<UILabel>();
             title.text = "Day/Night Settings";
@@ -69,12 +71,14 @@ namespace TimeWarpMod
             sunSize.eventValueChanged += ValueChanged;
 
             AddUIComponent<UILabel>().text = "Sun Intensity";
-            sunIntensity = UIFactory.CreateSlider(this, 0, 8f);
+            sunIntensity = UIFactory.CreateSlider(this, 0f, 20f);
             sunIntensity.stepSize = 0.1f;
+            sunIntensity.eventValueChanged += ValueChanged;
 
             UILabel endPadding = AddUIComponent<UILabel>();
             endPadding.text = "    ";
-            
+                        
+
         }
 
 
@@ -114,6 +118,7 @@ namespace TimeWarpMod
 
         void Update()
         {
+            relativePosition = new Vector3(20, 620, 0);
 
             if (DayNightProperties.instance != null) {
 
@@ -126,21 +131,28 @@ namespace TimeWarpMod
                 sunSize.value = DayNightProperties.instance.m_SunSize;
                 sunIntensity.value = DayNightProperties.instance.m_SunIntensity;
 
-
-                switch (sunControl.speed)
+                if (sunControl.DayNightEnabled)
                 {
-                    case 0:
-                        speed.text = "Speed: Paused";
-                        break;
-                    case 1:
-                        speed.text = "Speed: Normal";
-                        break;
-                    default:
-                        speed.text = "Speed: " + sunControl.speed + "x";
-                        break;
-                }
 
-                speedControl.value = Array.IndexOf(speeds, sunControl.speed);
+                    switch (sunControl.speed)
+                    {
+                        case 0:
+                            speed.text = "Speed: Paused";
+                            break;
+                        case 1:
+                            speed.text = "Speed: Normal";
+                            break;
+                        default:
+                            speed.text = "Speed: " + sunControl.speed + "x";
+                            break;
+                    }
+                    speedControl.value = Array.IndexOf(speeds, sunControl.speed);
+                }
+                else
+                {
+                    speed.text = "Disabled";
+                    speedControl.value = 0;
+                }                
             }
 
             base.Update();

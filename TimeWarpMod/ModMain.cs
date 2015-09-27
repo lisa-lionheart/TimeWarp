@@ -25,6 +25,9 @@ namespace TimeWarpMod
         public string Description
         {
             get {
+#if DEBUG
+                CreateControlPanel();
+#endif
                 return "Right click on the Area Zoom button to set the time of day"; 
             }
         }
@@ -36,20 +39,17 @@ namespace TimeWarpMod
             Debug.Log("Creating panel");
 
             sunControlPanel = new GameObject("SunControlPanel").AddComponent<SunControlGUI>();
-            sunControlPanel.gameObject.transform.localPosition = new Vector3(-1.75f, -0.1f, 0);
+            sunControlPanel.anchor = UIAnchorStyle.Bottom;
+            
             sunControlPanel.sunControl = sunControl;
 
             timeSlider = new GameObject("TimeSlider").AddComponent<TimeSlider>();
-            timeSlider.gameObject.transform.localPosition = new Vector3(-1.33f, -0.6f, 0);
+            timeSlider.anchor = UIAnchorStyle.Bottom;
             timeSlider.sunControl = sunControl;
 
 
             UIView.GetAView().AttachUIComponent(timeSlider.gameObject);
             UIView.GetAView().AttachUIComponent(sunControlPanel.gameObject);
-
-
-            sunControlPanel.gameObject.SetActive(false);
-            timeSlider.gameObject.SetActive(false);
         }
 
         public void AddGUIToggle()
@@ -107,6 +107,10 @@ namespace TimeWarpMod
                 sunControl = new GameObject().AddComponent<SunManager>();
 
                 CreateControlPanel();
+
+                sunControlPanel.gameObject.SetActive(false);
+                timeSlider.gameObject.SetActive(false);
+
                 AddGUIToggle();
                 HookZoomControls();
             }

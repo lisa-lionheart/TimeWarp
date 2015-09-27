@@ -34,7 +34,7 @@ namespace TimeWarpMod
             autoLayout = true;
             autoFitChildrenVertically = true;
             autoLayoutDirection = LayoutDirection.Vertical;
-            
+
 
 
             timeOfDay = AddUIComponent<UILabel>();
@@ -77,27 +77,38 @@ namespace TimeWarpMod
 
         public override void Update()
         {
-            float tod = sunControl.TimeOfDay;
 
-            int hour = (int)Math.Floor(tod);
-            int minute = (int)Math.Floor((tod - hour) * 60.0f);
+            relativePosition = new Vector3(235, 885, 0);            
 
-            timeOfDay.text = String.Format("{0,2:00}:{1,2:00}", hour, minute);
-
-            if (!pauseUpdates)
+            if (sunControl != null)
             {
-     
-                timeSlider.value = sunControl.TimeOfDay;
+                if (sunControl.DayNightEnabled)
+                {
 
+                    float tod = sunControl.TimeOfDay;
+
+                    int hour = (int)Math.Floor(tod);
+                    int minute = (int)Math.Floor((tod - hour) * 60.0f);
+
+                    timeOfDay.text = String.Format("{0,2:00}:{1,2:00}", hour, minute);
+
+                    if (!pauseUpdates)
+                    {
+
+                        timeSlider.value = sunControl.TimeOfDay;
+
+                    }
+
+                    float fade = Math.Abs(sunControl.TimeOfDay - 12.0f) / 12.0f;
+
+
+                    ((UISprite)timeSlider.thumbObject).color = Color32.Lerp(sunColor, moonColor, fade);
+                }
+                else
+                {
+                    timeOfDay.text = "Night cycle disabled in settings";
+                }
             }
-
-            float fade = Math.Abs(sunControl.TimeOfDay - 12.0f) / 12.0f;
-
-
-            
-
-            ((UISprite)timeSlider.thumbObject).color = Color32.Lerp(sunColor, moonColor, fade);
-            
             base.Update();
         }
     }
