@@ -11,11 +11,11 @@ namespace TimeWarpMod
     class SunManager : MonoBehaviour, ISimulationManager
     {
 
-        public uint speed;
+        public double speed;
 
 
         SimulationManager sim = Singleton<SimulationManager>.instance;
-        private uint dayOffsetFrames;
+        private double dayOffsetFrames;
 
         public void Awake() {
             dayOffsetFrames = sim.m_dayTimeOffsetFrames;
@@ -51,7 +51,7 @@ namespace TimeWarpMod
                 dayOffsetFrames = (dayOffsetFrames + speed - 1) % SimulationManager.DAYTIME_FRAMES;
             }
 
-            sim.m_dayTimeOffsetFrames = dayOffsetFrames;
+            sim.m_dayTimeOffsetFrames = (uint) dayOffsetFrames;
         }
 
         public void UpdateData(SimulationManager.UpdateMode mode)
