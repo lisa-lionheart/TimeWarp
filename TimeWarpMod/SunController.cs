@@ -1,9 +1,6 @@
-﻿using ColossalFramework;
+using ColossalFramework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace TimeWarpMod
@@ -31,7 +28,7 @@ namespace TimeWarpMod
 
         public string GetName()
         {
-            return "Sun control";
+            return TimeWarpLang.Text("SUNCONTROL");
         }
 
         public ThreadProfiler GetSimulationProfiler()

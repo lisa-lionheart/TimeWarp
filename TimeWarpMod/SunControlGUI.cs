@@ -1,9 +1,6 @@
 ﻿
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using BuildingThemes.GUI;
 using UnityEngine;
 using ColossalFramework.UI;
@@ -42,7 +39,7 @@ namespace TimeWarpMod
             autoLayoutDirection = LayoutDirection.Vertical;
 
             UILabel title = AddUIComponent<UILabel>();
-            title.text = "Day/Night Settings";
+            title.text = TimeWarpLang.Text("SUNCONTROL_TITLE");
             title.textAlignment = UIHorizontalAlignment.Center;
             title.verticalAlignment = UIVerticalAlignment.Middle;
             title.textScale = 1.1f;
@@ -64,11 +61,11 @@ namespace TimeWarpMod
             longitudeControl = UIFactory.CreateSlider(this, -180f, 180f);
             longitudeControl.eventValueChanged += ValueChanged;
 
-            AddUIComponent<UILabel>().text = "Sun Size";
+            AddUIComponent<UILabel>().text = TimeWarpLang.Text("SUNCONTROL_SIZE");
             sunSize = UIFactory.CreateSlider(this, 0.01f, 10.0f);         
             sunSize.eventValueChanged += ValueChanged;
 
-            AddUIComponent<UILabel>().text = "Sun Intensity";
+            AddUIComponent<UILabel>().text = TimeWarpLang.Text("SUNCONTROL_INTENSITY");
             sunIntensity = UIFactory.CreateSlider(this, 0, 8f);
             sunIntensity.stepSize = 0.1f;
 
@@ -112,16 +109,16 @@ namespace TimeWarpMod
 
 
 
-        void Update()
+        public override void Update()
         {
 
             if (DayNightProperties.instance != null) {
 
                 lattitudeControl.value = DayNightProperties.instance.m_Latitude;
-                lattitude.text = "Lattitude: " + Math.Floor(DayNightProperties.instance.m_Latitude) + "°";
+                lattitude.text = TimeWarpLang.Text("LATTITUDE") + Math.Floor(DayNightProperties.instance.m_Latitude) + "°";
                 
                 longitudeControl.value = DayNightProperties.instance.m_Longitude;
-                longitude.text = "Longitude: " + Math.Floor(DayNightProperties.instance.m_Longitude) + "°";
+                longitude.text = TimeWarpLang.Text("LONGITUDE") + Math.Floor(DayNightProperties.instance.m_Longitude) + "°";
 
                 sunSize.value = DayNightProperties.instance.m_SunSize;
                 sunIntensity.value = DayNightProperties.instance.m_SunIntensity;
@@ -130,13 +127,13 @@ namespace TimeWarpMod
                 switch (sunControl.speed)
                 {
                     case 0:
-                        speed.text = "Speed: Paused";
+                        speed.text = TimeWarpLang.Text("SPEED_PAUZED");
                         break;
                     case 1:
-                        speed.text = "Speed: Normal";
+                        speed.text = TimeWarpLang.Text("SPEED_NORMAL");
                         break;
                     default:
-                        speed.text = "Speed: " + sunControl.speed + "x";
+                        speed.text = TimeWarpLang.Text("SPEED") + sunControl.speed + "x";
                         break;
                 }
 
