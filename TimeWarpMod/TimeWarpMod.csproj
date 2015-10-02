@@ -61,6 +61,7 @@
     <Compile Include="SunController.cs" />
     <Compile Include="TimeSlider.cs" />
     <Compile Include="UIUtils.cs" />
+    <Compile Include="Language.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

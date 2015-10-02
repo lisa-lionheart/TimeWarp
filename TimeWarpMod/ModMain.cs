@@ -17,12 +17,12 @@ namespace TimeWarpMod
             
         public string Name
         {
-            get { return "Time Warp"; }
+            get { return TimeWarpLang.Text("MOD_NAME"); }
         }
         public string Description
         {
             get {
-                return "Right click on the Area Zoom button to set the time of day"; 
+                return TimeWarpLang.Text("MOD_DESCRIPTION"); 
             }
         }
 
@@ -66,7 +66,7 @@ namespace TimeWarpMod
             toggle.hoveredBgSprite = "OptionBaseHover";
             toggle.pressedBgSprite = "OptionBasePressed";
 
-            toggle.tooltip = "Day/Night Settings";
+            toggle.tooltip = TimeWarpLang.Text("TOGGLE_TOOLTIP");
 
             toggle.normalFgSprite = "InfoIconEntertainmentDisabled";
             toggle.scaleFactor = 0.75f;
@@ -89,7 +89,7 @@ namespace TimeWarpMod
         {
             UIMultiStateButton zoomButton = GameObject.Find("ZoomButton").GetComponent<UIMultiStateButton>();
 
-            zoomButton.tooltip = "Areas \n Right Click to set time of day";
+            zoomButton.tooltip = TimeWarpLang.Text("ZOOMBUTTON_TOOLTIP");
             zoomButton.eventMouseMove += MouseMoved;
             zoomButton.eventMouseUp += MouseMoved;
 
