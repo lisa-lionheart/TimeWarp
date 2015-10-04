@@ -4,16 +4,30 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
 namespace TimeWarpMod
 {
+
+    [Serializable]
+    public class Settings
+    {
+        public Fraction speed;
+        public uint dayOffsetFrames;
+        public float longitude;
+        public float lattitude;
+        public float sunSize;
+        public float sunIntensity;
+    }
+
     class SunManager : MonoBehaviour, ISimulationManager
     {
 
-        public uint speed;
+        public Fraction speed;
+        private uint tick;
 
 
         SimulationManager sim = Singleton<SimulationManager>.instance;
@@ -23,11 +37,60 @@ namespace TimeWarpMod
         {
             dayOffsetFrames = sim.m_dayTimeOffsetFrames;
             SimulationManager.RegisterSimulationManager(this);
-            speed = 1;
+            speed = new Fraction(){num=1,den=1};
 
+            LoadData();
         }
 
-    
+
+        void LoadData()
+        {
+            byte[] data = sim.m_SerializableDataWrapper.LoadData("TimeWarp");
+            if (data != null)   {
+                try
+                {
+                    Settings settings = (Settings)(new BinaryFormatter()).Deserialize(new MemoryStream(data));
+
+                    speed = settings.speed;
+                    dayOffsetFrames = settings.dayOffsetFrames;
+                    DayNightProperties.instance.m_Longitude = settings.longitude;
+                    DayNightProperties.instance.m_Latitude = settings.lattitude;
+                    DayNightProperties.instance.m_SunIntensity = settings.sunIntensity;
+                    DayNightProperties.instance.m_SunSize = settings.sunSize;
+                    
+                }
+                catch (Exception e)
+                {
+                    Debug.Log("Error loading timewarp settings: " + e);
+                }
+            }
+        }
+
+
+        public void SaveData()
+        {
+            try
+            {
+                Settings settings = new Settings();
+
+                settings.speed = speed;
+                settings.dayOffsetFrames = dayOffsetFrames;
+                settings.longitude = DayNightProperties.instance.m_Longitude;
+                settings.lattitude = DayNightProperties.instance.m_Latitude;
+                settings.sunIntensity = DayNightProperties.instance.m_SunIntensity;
+                settings.sunSize = DayNightProperties.instance.m_SunSize;
+
+                MemoryStream stream = new MemoryStream();
+                new BinaryFormatter().Serialize(stream, settings);
+
+                sim.m_SerializableDataWrapper.SaveData("TimeWarp", stream.ToArray());
+                Debug.Log("time wqarp settings aved okay");
+            }
+            catch (Exception e)
+            {
+                Debug.Log("Error saving time warp settings: " + e);
+            }
+        }
 
         public string GetName()
         {
@@ -54,7 +117,17 @@ namespace TimeWarpMod
 
             if (!sim.SimulationPaused && !sim.ForcedSimulationPaused)
             {
-                dayOffsetFrames = (dayOffsetFrames + speed - 1) % SimulationManager.DAYTIME_FRAMES;
+                //Do every nth frame for fractional speeds
+                if (tick == 0)
+                {
+                    dayOffsetFrames = (dayOffsetFrames + (uint)speed.num - 1) % SimulationManager.DAYTIME_FRAMES;
+                }
+                else
+                {
+                    dayOffsetFrames = (dayOffsetFrames - 1) % SimulationManager.DAYTIME_FRAMES;
+                }
+
+                tick = (tick + 1) % speed.den;
             }
 
             sim.m_dayTimeOffsetFrames = dayOffsetFrames;
@@ -95,6 +168,8 @@ namespace TimeWarpMod
                 dayOffsetFrames = (uint)(((long)dayOffsetFrames + offset) % SimulationManager.DAYTIME_FRAMES);
 
                 sim.m_currentDayTimeHour = value;
+
+                SaveData();
             }
             get
             {

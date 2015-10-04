@@ -28,7 +28,23 @@ namespace TimeWarpMod
 
         public SunManager sunControl;
 
-        private uint[] speeds = { 0, 1, 2, 4, 8, 16, 32, 64, 128 };
+        private static Fraction[] speeds = { 
+            new Fraction(){num=0, den=1},
+            new Fraction(){num=1, den=128},
+            new Fraction(){num=1, den=64},
+            new Fraction(){num=1, den=16},
+            new Fraction(){num=1, den=8},
+            new Fraction(){num=1, den=4},
+            new Fraction(){num=1, den=2},
+            new Fraction(){num=1, den=1},
+            new Fraction(){num=2, den=1},
+            new Fraction(){num=4, den=1},
+            new Fraction(){num=8, den=1},
+            new Fraction(){num=16, den=1},
+            new Fraction(){num=32, den=1},
+            new Fraction(){num=64, den=1},
+            new Fraction(){num=128,den=1}
+        };
 
         public override void Awake()
         {
@@ -55,7 +71,7 @@ namespace TimeWarpMod
             
             //0, 1, 2, 4, 8, 16, 32, 64, 128 
             speed = AddUIComponent<UILabel>();
-            speedControl = UIFactory.CreateSlider(this,0f, 8f);
+            speedControl = UIFactory.CreateSlider(this,0f, speeds.Length);
             speedControl.eventValueChanged += ValueChanged;
            
             lattitude = AddUIComponent<UILabel>();
@@ -111,6 +127,8 @@ namespace TimeWarpMod
             {
                 sunControl.speed = speeds[(uint)value];
             }
+
+            sunControl.SaveData();
         }
 
 
@@ -133,19 +151,7 @@ namespace TimeWarpMod
 
                 if (sunControl.DayNightEnabled)
                 {
-
-                    switch (sunControl.speed)
-                    {
-                        case 0:
-                            speed.text = "Speed: Paused";
-                            break;
-                        case 1:
-                            speed.text = "Speed: Normal";
-                            break;
-                        default:
-                            speed.text = "Speed: " + sunControl.speed + "x";
-                            break;
-                    }
+                    speed.text = "Speed: " + sunControl.speed.ToString();
                     speedControl.value = Array.IndexOf(speeds, sunControl.speed);
                 }
                 else

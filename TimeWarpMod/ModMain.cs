@@ -20,7 +20,7 @@ namespace TimeWarpMod
             
         public string Name
         {
-            get { return "Time Warp"; }
+            get { return strings.mod_name }
         }
         public string Description
         {
