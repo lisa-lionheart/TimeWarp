@@ -84,20 +84,14 @@ namespace TimeWarpMod
                 new BinaryFormatter().Serialize(stream, settings);
 
                 sim.m_SerializableDataWrapper.SaveData("TimeWarp", stream.ToArray());
-                Debug.Log("time wqarp settings aved okay");
+                Debug.Log("Time warp settings saved okay");
             }
             catch (Exception e)
             {
                 Debug.Log("Error saving time warp settings: " + e);
             }
         }
-
-        public string GetName()
-        {
-            return "Sun control";
-        }
-
-
+        
 
         public bool DayNightEnabled
         {
@@ -178,7 +172,9 @@ namespace TimeWarpMod
         }
 
 
-
-
+        public string GetName()
+        {
+            return "Sun Controller";
+        }
     }
 }

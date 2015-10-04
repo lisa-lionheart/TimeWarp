@@ -60,7 +60,7 @@ namespace TimeWarpMod
 
 
             UILabel title = AddUIComponent<UILabel>();
-            title.text = "Day/Night Settings";
+            title.text = i18n.current["suncontrol_title"];
             title.textAlignment = UIHorizontalAlignment.Center;
             title.verticalAlignment = UIVerticalAlignment.Middle;
             title.textScale = 1.1f;
@@ -82,11 +82,11 @@ namespace TimeWarpMod
             longitudeControl = UIFactory.CreateSlider(this, -180f, 180f);
             longitudeControl.eventValueChanged += ValueChanged;
 
-            AddUIComponent<UILabel>().text = "Sun Size";
+            AddUIComponent<UILabel>().text = i18n.current["suncontrol_size"];
             sunSize = UIFactory.CreateSlider(this, 0.01f, 10.0f);         
             sunSize.eventValueChanged += ValueChanged;
 
-            AddUIComponent<UILabel>().text = "Sun Intensity";
+            AddUIComponent<UILabel>().text = i18n.current["suncontrol_intensity"];
             sunIntensity = UIFactory.CreateSlider(this, 0f, 20f);
             sunIntensity.stepSize = 0.1f;
             sunIntensity.eventValueChanged += ValueChanged;
@@ -141,22 +141,22 @@ namespace TimeWarpMod
             if (DayNightProperties.instance != null) {
 
                 lattitudeControl.value = DayNightProperties.instance.m_Latitude;
-                lattitude.text = "Lattitude: " + Math.Floor(DayNightProperties.instance.m_Latitude) + "°";
+                lattitude.text = i18n.current["lattitude"] + Math.Floor(DayNightProperties.instance.m_Latitude) + "°";
                 
                 longitudeControl.value = DayNightProperties.instance.m_Longitude;
-                longitude.text = "Longitude: " + Math.Floor(DayNightProperties.instance.m_Longitude) + "°";
+                longitude.text = i18n.current["longitude"] + Math.Floor(DayNightProperties.instance.m_Longitude) + "°";
 
                 sunSize.value = DayNightProperties.instance.m_SunSize;
                 sunIntensity.value = DayNightProperties.instance.m_SunIntensity;
 
                 if (sunControl.DayNightEnabled)
                 {
-                    speed.text = "Speed: " + sunControl.speed.ToString();
+                    speed.text = i18n.current["speed"] + sunControl.speed.ToString();
                     speedControl.value = Array.IndexOf(speeds, sunControl.speed);
                 }
                 else
                 {
-                    speed.text = "Disabled";
+                    speed.text = i18n.current["speed_disabled"];
                     speedControl.value = 0;
                 }                
             }

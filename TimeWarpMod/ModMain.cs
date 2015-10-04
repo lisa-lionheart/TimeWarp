@@ -4,9 +4,11 @@ using ColossalFramework.UI;
 using ICities;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -20,7 +22,7 @@ namespace TimeWarpMod
             
         public string Name
         {
-            get { return strings.mod_name }
+            get { return i18n.current["mod_name"]; }
         }
         public string Description
         {
@@ -28,7 +30,7 @@ namespace TimeWarpMod
 #if DEBUG
                 CreateControlPanel();
 #endif
-                return "Right click on the Area Zoom button to set the time of day"; 
+                return i18n.current["mod_description"]; 
             }
         }
 
@@ -69,7 +71,7 @@ namespace TimeWarpMod
             toggle.hoveredBgSprite = "OptionBaseHover";
             toggle.pressedBgSprite = "OptionBasePressed";
 
-            toggle.tooltip = "Day/Night Settings";
+            toggle.tooltip = i18n.current["toggle_tooltip"];
 
             toggle.normalFgSprite = "InfoIconEntertainmentDisabled";
             toggle.scaleFactor = 0.75f;
@@ -92,7 +94,7 @@ namespace TimeWarpMod
         {
             UIMultiStateButton zoomButton = GameObject.Find("ZoomButton").GetComponent<UIMultiStateButton>();
 
-            zoomButton.tooltip = "Areas \n Right Click to set time of day";
+            zoomButton.tooltip = i18n.current["zoombutton_tooltip"];
             zoomButton.eventMouseMove += MouseMoved;
             zoomButton.eventMouseUp += MouseMoved;
 

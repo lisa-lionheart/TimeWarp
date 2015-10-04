@@ -16,10 +16,10 @@ namespace TimeWarpMod
         public override string ToString()
         {
             if (num == 0)
-                return "Paused";
+                return i18n.current["speed_paused"];
 
             if (num == 1 && den == 1)
-                return "Normal";
+                return i18n.current["speed_normal"];
 
             if (num > den)
                 return num + "x";

@@ -2,10 +2,7 @@
 using ColossalFramework;
 using ColossalFramework.UI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace TimeWarpMod
@@ -106,7 +103,7 @@ namespace TimeWarpMod
                 }
                 else
                 {
-                    timeOfDay.text = "Night cycle disabled in settings";
+                    timeOfDay.text = i18n.current["night_disabled"];
                 }
             }
             base.Update();
