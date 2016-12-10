@@ -10,7 +10,7 @@ namespace TimeWarpMod
         private Dictionary<string, string> _ = new Dictionary<string, string>();
         public string lang;
         private static i18n _current;
-        private static i18n english = new i18n("en");
+        //private static i18n english = new i18n("en");
 
         public string this[string key]
         {
@@ -55,7 +55,7 @@ namespace TimeWarpMod
                     _["SUNCONTROL_INTENSITY"]   = "Zonne-intensiteit";
                     _["LATTITUDE"]              = "Breedtegraad: ";
                     _["LONGITUDE"]              = "Lengtegraad: ";
-                    _["SPEED_PAUZED"]           = "Gepauzeerd";
+                    _["SPEED_PAUSED"]           = "Snelheid Uitgeschakeld";
                     _["SPEED_NORMAL"]           = "Normaal";
                     _["SPEED_DISABLED"]         = "Gehandicapte";
                     _["SPEED"]                  = "Snelheid: ";
@@ -74,7 +74,7 @@ namespace TimeWarpMod
                     _["SUNCONTROL_INTENSITY"]   = "Sonnenintensität";
                     _["LATTITUDE"]              = "Breitengrad: ";
                     _["LONGITUDE"]              = "Längengrad: ";
-                    _["SPEED_PAUZED"]           = "Pausiert";
+                    _["SPEED_PAUSED"]           = "Pausiert";
                     _["SPEED_NORMAL"]           = "Normal";
                     _["SPEED_DISABLED"]         = "Behindert";
                     _["SPEED"]                  = "Geschwindigkeit: ";
@@ -94,7 +94,7 @@ namespace TimeWarpMod
                     _["SUNCONTROL_INTENSITY"]   = "Intensità solare";
                     _["LATTITUDE"]              = "Lattitudine: ";
                     _["LONGITUDE"]              = "Longitudine: ";
-                    _["SPEED_PAUZED"]           = "In pausa";
+                    _["SPEED_PAUSED"]           = "In pausa";
                     _["SPEED_NORMAL"]           = "Normale";
                     _["SPEED_DISABLED"]         = "Disabilitato";
                     _["SPEED"]                  = "Velocità: ";
@@ -114,7 +114,7 @@ namespace TimeWarpMod
                     _["SUNCONTROL_INTENSITY"]   = "Sun Intensity";
                     _["LATTITUDE"]              = "Lattitude: ";
                     _["LONGITUDE"]              = "Longitude: ";
-                    _["SPEED_PAUZED"]           = "Paused";
+                    _["SPEED_PAUSED"]           = "Paused";
                     _["SPEED_NORMAL"]           = "Normal";
                     _["SPEED_DISABLED"]         = "Disabled";
                     _["SPEED"]                  = "Speed: ";
