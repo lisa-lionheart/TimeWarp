@@ -25,7 +25,7 @@ namespace TimeWarpMod
     {
 
         public Fraction speed;
-        private uint tick;
+        private uint tick = 0;
 
 
         SimulationManager sim = Singleton<SimulationManager>.instance;
