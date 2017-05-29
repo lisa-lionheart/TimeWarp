@@ -101,7 +101,27 @@ namespace TimeWarpMod
                     _["NIGHT_DISABLED"]         = "Ciclo Notte disattivata nelle impostazioni";
 
                     return;
+                case "ko":
 
+                    _["MOD_NAME"]               = "타임 워프 모드";
+                    _["MOD_DESCRIPTION"]        = "모드전용 패널에서 스크롤바를 움직여 시간을 조절 할 수 있습니다";
+
+                    _["TOGGLE_TOOLTIP"]         = "낮/밤 주기 설정";
+                    _["ZOOMBUTTON_TOOLTIP"]     = "패널에서 \n 스크롤바를 움직여 시간을 조절 할 수 있습니다";
+                    _["SUNCONTROL"]             = "태양 설정";
+                    _["SUNCONTROL_TITLE"]       = "낮/밤 주기 설정";
+                    _["SUNCONTROL_SIZE"]        = "태양 크기";
+                    _["SUNCONTROL_INTENSITY"]   = "태양 광도";
+                    _["LATTITUDE"]              = "위도 : ";
+                    _["LONGITUDE"]              = "경도 : ";
+                    _["SPEED_PAUZED"]           = "정지";
+                    _["SPEED_NORMAL"]           = "보통";
+                    _["SPEED_DISABLED"]         = "비활성화";
+                    _["SPEED"]                  = "주기속도 : ";
+            
+                    _["NIGHT_DISABLED"]         = "게임플레이 설정에서 주/야간 주기기능을 켜십시오";
+					
+                    return;
                 default:
                     _["MOD_NAME"]               = "Time Warp";
                     _["MOD_DESCRIPTION"]        = "Right click on the Area Zoom button to set the time of day";
