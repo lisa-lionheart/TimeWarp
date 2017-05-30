@@ -1,9 +1,6 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using BuildingThemes.GUI;
 using UnityEngine;
 using ColossalFramework.UI;
@@ -97,9 +94,7 @@ namespace TimeWarpMod
 
         }
 
-
-
-        void ValueChanged(UIComponent component, float value)
+        private void ValueChanged(UIComponent component, float value)
         {
             Debug.Log("New Value: " + value);
 
@@ -132,9 +127,7 @@ namespace TimeWarpMod
         }
 
 
-
-
-        void Update()
+        public override void Update()
         {
             relativePosition = new Vector3(20, 620, 0);
 
@@ -158,11 +151,11 @@ namespace TimeWarpMod
                 {
                     speed.text = i18n.current["speed_disabled"];
                     speedControl.value = 0;
-                }                
+                }
             }
 
             base.Update();
         }
-
+	
     }
 }

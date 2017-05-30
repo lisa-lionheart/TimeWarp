@@ -3,10 +3,8 @@ using ColossalFramework.IO;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace TimeWarpMod
@@ -27,11 +25,15 @@ namespace TimeWarpMod
     {
 
         public Fraction speed;
-        private uint tick;
+        private uint tick = 0;
 
 
         SimulationManager sim = Singleton<SimulationManager>.instance;
         private uint dayOffsetFrames;
+
+        public void EarlyUpdateData()
+        {
+	}
 
         public void Awake()
         {
